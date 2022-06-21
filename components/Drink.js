@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Text, FlatList, View, Image, TextInput, SafeAreaView } from 'react-native';
+import { Text, FlatList, View, Image, TextInput, SafeAreaView, StyleSheet } from 'react-native';
 
 
 
-const Exam3c = () => {
+const Drink = () => {
     const [data,setData] = useState([]);
     const [loading,setLoading] = useState(true);
 
-    const getMeals = async () => {
+    const getDrink = async () => {
         try {
-          const url = "https://www.themealdb.com/api/json/v1/1/filter.php?i="+ingr
+          const url = "www.thecocktaildb.com/api/json/v1/1/random.php"
           const response = await fetch(url);
           const json = await response.json();
-          setData(json.meals); 
+          setData(json.drink); 
         } catch (error) {
           console.error(error);
         } finally {
@@ -20,23 +20,18 @@ const Exam3c = () => {
         }
       };
 
-    useEffect(() => {getMeals()}, [ingr])
+    useEffect(() => {getDrink()})
 
     return(
         <SafeAreaView>
-            <Text style={{fontSize:30,margin:10}}>Meal Finder</Text>
+            <Text style={{fontSize:30,margin:10}}>Drink Finder</Text>
             <View style={{flexDirection:'row',margin:10}}>
-                <Text>Main Ingredient:</Text>
-                <TextInput
-                placeholder="ingredient"
-                onChangeText = {(text) => {setIngr(text)}}
-                defaultValue = {ingr}
-                />    
+                <Text>Here is a random drink that I would like to suggest.</Text>  
             </View>
             
             <FlatList
                 data={data}
-                keyExtractor={({ idMeal }, index) => idMeal}
+                keyExtractor={({ idDrink }, index) => idDrink}
                 renderItem={({ item }) => (
                     <View style={{flexDirection:'row',
                                     padding:15,
@@ -44,11 +39,11 @@ const Exam3c = () => {
                                     borderWidth:2,
                                     justifyContent:'space-evenly',
                                     backgroundColor:'#fedcba',}}>
-                        <Text>{item.strMeal}</Text>
+                        <Text>{item.strDrink}</Text>
         
                         <Image 
                             style={ {  width: 50, height: 50,}}
-                            source={{uri:item.strMealThumb}} />
+                            source={{uri:item.strDrinkThumb}} />
                         
                         
                         
@@ -72,4 +67,4 @@ const styles = StyleSheet.create({
    
   });
 
-export default Exam3c;
+export default Drink;
