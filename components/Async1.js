@@ -13,21 +13,21 @@ const Async1 = () => {
             <View style={{flexDirection:'row'}}>
                 <Text>name:</Text>
                 <TextInput
-                    style={{backgroundColor:'green'}}
+                    style={{backgroundColor:'#8AC7DB'}}
                     onChangeText = {(name)=>setName(name)} 
                 />
-            </View>
+            </View>            
             <View style={{flexDirection:'row'}}>
                 <Text>injuiry:</Text>
                 <TextInput
-                    style={{backgroundColor:'blue'}}
+                    style={{backgroundColor:'#8AC7DB'}}
                     onChangeText = {(injuriy)=>setInjuriy(injuriy)} 
                 />
             </View>
             <View style={{flexDirection:'row'}}>
                 <Text>pain Level:</Text>
                 <TextInput
-                    style={{backgroundColor:'red'}}
+                    style={{backgroundColor:'#8AC7DB'}}
                     onChangeText = {(painLevel)=>setPainLevel(painLevel)} 
                 />
             </View>
