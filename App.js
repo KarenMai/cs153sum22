@@ -8,9 +8,11 @@ import MyStack from './components/MyStack.js';
 // or any pure javascript modules available in npm
 import { Card } from 'react-native-paper';
 
+import AsyncContextDemo from './components/AsyncContextDemo';
+
 export default function App() {
   return (
-    <MyStack /> 
+    <AsyncContextDemo /> 
   );
 }
 
