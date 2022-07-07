@@ -1,190 +1,122 @@
-import React, { useState, useEffect, useRef} from 'react';
-import { Text, FlatList, View, Image, TextInput, SafeAreaView, Button } from 'react-native';
-import {useValue} from './ValueStorageContext';
-
-
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Text,
+  FlatList,
+  View,
+  Image,
+  TextInput,
+  SafeAreaView,
+  Button,
+  StyleSheet,
+  StatusBar,
+} from "react-native";
+import { useValue } from "./ValueStorageContext";
 
 const DATA = [
-    {
-      id: '1',
-      title: 'Calve Raises',
-    },
-    {
-      id: '2',
-      title: 'SLR',
-    },
-    {
-      id: '3',
-      title: 'Crunches',
-
-    },
-    {
-        id: '4',
-        title: 'Push-Ups',
-
-      },
-    {
-        id: '5',
-        title: 'Pull-Ups',
-
-      },
-  ];
+  {
+    id: "1",
+    title: "Quadriceps",
+  },
+  {
+    id: "2",
+    title: "Hamstrings",
+  },
+  {
+    id: "3",
+    title: "Calves",
+  },
+  {
+    id: "4",
+    title: "Glutes",
+    quantity: "2x15",
+  },
+  {
+    id: "5",
+    title: "Popliteus",
+  },
+];
 
 const Item = ({ title }) => (
-    <View>
-      <Text>{title}</Text>
-    </View>
-  );
-
+  <View>
+    <Text>{title}</Text>
+  </View>
+);
 
 const Async3 = () => {
-    const {currentValue} = useValue();
-    const renderItem = ({ item }) => (
-        <Item title={item.title} />
-      );
-    const [count,setCount] = useState(0); 
-      
-    // We need ref in this, because we are dealing
-    // with JS setInterval to keep track of it and
-    // stop it when needed
-    const Ref = useRef(null);
-  
-    // The state for our timer
-    const [timer, setTimer] = useState('00:00:00');
-  
-  
-    const getTimeRemaining = (e) => {
-        const total = Date.parse(e) - Date.parse(new Date());
-        const seconds = Math.floor((total / 1000) % 60);
-        const minutes = Math.floor((total / 1000 / 60) % 60);
-        const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-        return {
-            total, hours, minutes, seconds
-        };
-    }
-  
-  // use state be an object with five proproties so that i can update each one
-    const startTimer = (e) => {
-        let { total, hours, minutes, seconds } 
-                    = getTimeRemaining(e);
-        if (total >= 0) {
-  
-            // update the timer
-            // check if less than 10 then we need to 
-            // add '0' at the beginning of the variable
-            setTimer(
-                (hours > 9 ? hours : '0' + hours) + ':' +
-                (minutes > 9 ? minutes : '0' + minutes) + ':'
-                + (seconds > 9 ? seconds : '0' + seconds)
-            )
-        }
-    }
-  
-  
-    const clearTimer = (e) => {
-  
-        // If you adjust it you should also need to
-        // adjust the Endtime formula we are about
-        // to code next    
-        setTimer('30:00:00');
-  
-        // If you try to remove this line the 
-        // updating of timer Variable will be
-        // after 1000ms or 1sec
-        if (Ref.current) clearInterval(Ref.current);
-        const id = setInterval(() => {
-            startTimer(e);
-        }, 1000)
-        Ref.current = id;
-    }
-  
-    const getDeadTime = () => {
-        let deadline = new Date();
-  
-        // This is where you need to adjust if 
-        // you entend to add more time
-        deadline.setSeconds(deadline.getSeconds() + 10);
-        return deadline;
-    }
-  
-    // We can use useEffect so that when the component
-    // mount the timer will start as soon as possible
-  
-    // We put empty array to act as componentDid
-    // mount only
-    useEffect(() => {
-        clearTimer(getDeadTime());
-    }, []);
-  
-    // Another way to call the clearTimer() to start
-    // the countdown is via action event from the
-    // button first we create function to be called
-    // by the button
-    const onClickReset = () => {
-        clearTimer(getDeadTime());
-    }
+  const { currentValue } = useValue();
+  const renderItem = ({ item }) => <Item title={item.title} />;
+  const [prone, setProne] = useState(0);
+  const [runner, setRunner] = useState(0);
+  const [heel, setHeel] = useState(0);
+  const [hip, setHip] = useState(0);
+  const [leg, setLeg] = useState(0);
+  const [clam, setClam] = useState(0);
 
-    return (
-        <View> 
-            <Text> Pain Level before/after workout </Text>
-        <div> 
-        <Text> pain level currently: {currentValue.painLevel} </Text>  
-        </div> 
+  return (
+    <View>
+      <Text> Pain Level before/after workout </Text>
+      <div>
+        <Text> pain level currently: {currentValue.painLevel} </Text>
+      </div>
 
+      <Text style={{ fontSize: 30, margin: 10 }}>
+        Here are the parts of the leg that we will be working on:{" "}
+      </Text>
+      <SafeAreaView style={styles.container}>
         <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
         />
+      </SafeAreaView>
 
-        <Text> Your workout countdown starts NOW: </Text>  
-        <div className="App">
-            <h2>{timer}</h2>
-            <button onClick={onClickReset}>Reset</button>
-        </div>
+      <Text style={{ fontSize: 30, margin: 10 }}>
+        {" "}
+        These are the amount of reps done{" "}
+      </Text>
 
-        <Text> These are the amount of reps done </Text>  
-
-<Text>Leg Presses? {count} </Text>
-    <Button 
-        title="push" 
-        onPress = {() => setCount(count+1)}
-        />
-    <Text>Clam Shells? {count} </Text>
-    <Button 
-        title="push" 
-        onPress = {() => setCount(count+1)}
-        /> 
-    <Text>Squats? {count} </Text>
-    <Button 
-        title="push" 
-        onPress = {() => setCount(count+1)}
-        />
-    <Text>Step-Ups? {count} </Text>
-    <Button 
-        title="push" 
-        onPress = {() => setCount(count+1)}
-        />  
-    <Text>Side Steps" {count} </Text>
-    <Button 
-        title="push" 
-        onPress = {() => setCount(count+1)}
-        />
-
+      <Text>Prone Knee Extension Hang: {prone} </Text>
+      <Text>2 minute</Text>
+      <Button title="add" color="green" onPress={() => setProne(prone + 1)} />
+      <Button title="refresh" color="red" onPress={() => setProne(0)} />
+      <Text>Runner Step Up/Down: {runner} </Text>
+      <Text>3x15</Text>
+      <Button title="add" color="green" onPress={() => setRunner(runner + 1)} />
+      <Button title="refresh" color="red" onPress={() => setRunner(0)} />
+      <Text>Standing Heel Raise: {heel} </Text>
+      <Text>2x15</Text>
+      <Button title="add" color="green" onPress={() => setHeel(heel + 1)} />
+      <Button title="refresh" color="red" onPress={() => setHeel(0)} />
+      <Text>Sidelying Hip Adbuction: {hip} </Text>
+      <Text>3x30sec</Text>
+      <Button title="add" color="green" onPress={() => setHip(hip + 1)} />
+      <Button title="refresh" color="red" onPress={() => setHip(0)} />
+      <Text>Single Leg Stance: {leg} </Text>
+      <Text>3x30sec</Text>
+      <Button title="add" color="green" onPress={() => setLeg(leg + 1)} />
+      <Button title="refresh" color="red" onPress={() => setLeg(0)} />
+      <Text>Clamshell at Wall in Hip Extension: {clam} </Text>
+      <Text>2x15</Text>
+      <Button title="add" color="green" onPress={() => setClam(clam + 1)} />
+      <Button title="refresh" color="red" onPress={() => setClam(0)} />
     </View>
-    )
-}
+  );
+};
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+});
 
 export default Async3;
-
-
-
-
-
-
-
-
-
-
-
