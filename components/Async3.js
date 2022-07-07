@@ -104,10 +104,6 @@ const Async3 = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
   item: {
     backgroundColor: "#f9c2ff",
     padding: 20,
@@ -116,6 +112,37 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#ecf0f1",
+    padding: 8,
+  },
+  subtitle: {
+    margin: 4,
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  paragraph: {
+    margin: 2,
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  title: {
+    margin: 10,
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  header: {
+    margin: 10,
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "steelblue",
   },
 });
 

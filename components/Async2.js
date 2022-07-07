@@ -22,7 +22,6 @@ const Async2 = () => {
 
   const getData = async () => {
     try {
-      // the '@profile_info' can be any string
       const jsonValue = await AsyncStorage.getItem("@journal");
       let data = null;
       if (jsonValue != null) {
@@ -31,18 +30,13 @@ const Async2 = () => {
         console.log("just set Info, Name and Email");
       } else {
         console.log("just read a null value from Storage");
-        // this happens the first time the app is loaded
-        // as there is nothing in storage...
         setJournal([]);
         setNote("");
         setDateTime("");
       }
     } catch (e) {
       console.log("error in getData ");
-      // this shouldn't happen, but its good practice
-      // to check for errors!
       console.dir(e);
-      // error reading value
     }
   };
 
@@ -69,7 +63,6 @@ const Async2 = () => {
     }
   };
 
-  // Each Pomorodo in the FlatList will be rendered as follows:
   const renderJournal = ({ item }) => {
     return (
       <View style={styles.journal}>
@@ -79,7 +72,6 @@ const Async2 = () => {
     );
   };
 
-  // We can set debug to true if we want to see all of the state variables
   let debug = false;
   const debugView = (
     <View>

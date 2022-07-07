@@ -16,7 +16,6 @@ export default function App() {
         <Tab.Screen name="Profile" component={Async1Screen} />
         <Tab.Screen name="Injuiry Notes" component={Async2Screen} />
         <Tab.Screen name="Phyiscal Therapy Tracker" component={Async3Screen} />
-        <Tab.Screen name="Nutrition" component={Async4Screen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

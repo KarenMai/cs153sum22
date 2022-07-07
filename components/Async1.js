@@ -22,13 +22,11 @@ const Async1 = () => {
   const [loading, setLoading] = useState(true);
   const [ingr, setIngr] = useState("Seafood");
 
-  const getMeals = async () => {
+  const getQuotes = async () => {
     try {
-      const url =
-        "https://www.themealdb.com/api/json/v1/1/filter.php?c=" + ingr;
-      const response = await fetch(url);
+      const response = await fetch("https://type.fit/api/quotes");
       const json = await response.json();
-      setData(json.meals);
+      setData(json);
     } catch (error) {
       console.error(error);
     } finally {
@@ -37,8 +35,8 @@ const Async1 = () => {
   };
 
   useEffect(() => {
-    getMeals();
-  }, [ingr]);
+    getQuotes();
+  }, []);
 
   return (
     <View>
@@ -68,7 +66,6 @@ const Async1 = () => {
           onChangeText={(painLevel) => setPainLevel(painLevel)}
         />
       </View>
-
       <Button
         title="save profile"
         onPress={() =>
@@ -78,6 +75,15 @@ const Async1 = () => {
             painLevel: painLevel,
           })
         }
+      />
+      <img src={require("./Workout.jpg")} />
+      <Text style={{ fontSize: 10, margin: 10 }}>
+        Here is a motivational quote:
+      </Text>
+      <FlatList
+        data={data}
+        keyExtractor={({ id }, index) => id}
+        renderItem={({ item }) => <Text>{item.text}</Text>}
       />
     </View>
   );
